@@ -9,4 +9,4 @@
 
 
 
-![1]('Y:\Blog\images\prototype1.png')
+![1]('https://github.com/liwens/Blog/blob/master/images/prototype1.png')
