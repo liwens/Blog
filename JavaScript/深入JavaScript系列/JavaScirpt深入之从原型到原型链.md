@@ -2,7 +2,7 @@
 原型链有几个概念
 构造函数,原型，prototype,实例。
 首先来说一下构造函数
-### 构造函数
+## 构造函数
 person是一个普通的函数
 ```javascript
 function person() {}
@@ -21,15 +21,15 @@ console.log(person.name) // liwens
 另外要注意的是，函数名`Person`是以大写`P`字母开头的。在《JavaScript高级程序设计第三版》P145页中提到
 >按照惯例，构造函数始终都应该是以一个大写字母开头，而非构造函数应该以一个小写字母开头
 
-### 原型 和 prototype的关系
+## 原型 和 prototype的关系
 原型 是什么？ 答: 原型 其实是一个对象，一般以 Xxx.prototype 表示
 
-prototype 是什么？ 答: 通俗的讲 prototype 是 构造函数 和 原型 之间的** 链接 ** (专业点讲叫 委托）。<br>
+prototype 是什么？ 答: 通俗的讲 prototype 是 构造函数 和 原型 之间的**链接** (专业点讲叫 委托）。<br>
 每一个对象( 函数也是对象 )在创建的时候都会通过`prototype`关联一个对象( null除外 ),这个的对象就是原型。<br>
 让我们用一张图表示构造函数和实例原型之间的关系：
 ![原型链1](../../images/原型链/prototype1.png)
 
-### 实例
+## 实例
 实例就是通过 `new`操作符调用 构造函数 生成的对象,如下面代码的 `person1` 就是 实例
 ```javascript
 function Person() {
@@ -37,9 +37,9 @@ function Person() {
 }
 var person1 = new Person();
 ```
-### 实例和原型的的关系
-每一个实例都会自带一个属性 \_proto_，这个属性会指向该对象的原型
-为了证明这一点,我们可以在火狐或者谷歌中输入：
+## 实例和原型的的关系
+每一个实例都会自带一个属性 \__proto__，这个属性会指向该对象的原型<br>
+为了证明这一点,我们可以在火狐或者谷歌中输入
 ```javascript
 function Person() {
 
@@ -47,7 +47,8 @@ function Person() {
 var person = new Person();
 console.log(person.__proto__ === Person.prototype); // true
 ```
-于是我们更新下关系图：
+于是我们更新下关系图
+
 ![原型链2](../../images/原型链/pr2.png)
 
 同一个构造函数生成的实例，都指向同一个原型
@@ -64,8 +65,8 @@ var person2 = new Person();
 console.log(person1.name) // liwens
 console.log(person2.name) // liwens
 ```
-### constructor
-上面讲到构造函数通过 prototype 指向 原型，实例通过 \_proto_ 指向 原型
+## constructor
+上面讲到构造函数通过 prototype 指向原型，实例通过 \__proto__ 指向 原型
 而原型是通过 constructor 属性指向构造函数的
 为了验证这一点，我们可以尝试：
 ```
@@ -90,7 +91,7 @@ console.log(Person.prototype.constructor == Person) // true
 // 顺便学习一个ES5的方法,可以获得对象的原型
 console.log(Object.getPrototypeOf(person) === Person.prototype) // true
 
-### 实例与原型 从下往上，找到为止。
+## 实例与原型 从下往上，找到为止。
 当读取一个实例的属性时，首先会在实例中找，如果找不到，就会根据 实例 的 \__proto__ 属性去到原型中找,找不到就去原型的原型找，一直找到最顶层为止
 ```javascript
 function Person() {
@@ -126,7 +127,7 @@ console.log(Person.prototype)
 ，所以我们再更新下关系图：
 ![原型链2](../../images/原型链/p4.jpg)
 
-### 原型链
+## 原型链
 那 Object.prototype 的原型呢？
 
 null，我们可以打印：
@@ -144,7 +145,7 @@ null，我们可以打印：
 ![原型链2](../../images/原型链/p5.jpg)
 顺便还要说一下，图中由相互关联的原型组成的链状结构就是原型链，也就是蓝色的这条线。
 
-### 补充
+## 补充
 最后补充几点大家可能不会注意的地方
 
 ** constructor **
@@ -163,16 +164,17 @@ console.log(person.constructor === Person); // true
 person.constructor === Person.prototype.constructor
 `
 
-**\__proto__**
+**\___proto___**
 
-其次是 \__proto__ ，绝大部分浏览器都支持这个非标准的方法访问原型，然而它并不存在于 Person.prototype 中，实际上，它是来自于 Object.prototype ，与其说是一个属性，不如说是一个 getter/setter，当使用 obj.\__proto__ 时，可以理解成返回了 Object.getPrototypeOf(obj)。
+其次是 \___proto___ ，绝大部分浏览器都支持这个非标准的方法访问原型，然而它并不存在于 Person.prototype 中，实际上，它是来自于 Object.prototype ，与其说是一个属性，不如说是一个 getter/setter，当使用 obj.\___proto___ 时，可以理解成返回了 `Object.getPrototypeOf(obj)`。
 
 **真的是继承吗？**
+
 最后是关于继承，前面我们讲到“每一个对象都会从原型‘继承’属性”，实际上，继承是一个十分具有迷惑性的说法，引用《你不知道的JavaScript》中的话，就是：
 
 >继承意味着复制操作，然而 JavaScript 默认并不会复制对象的属性，相反，JavaScript 只是在两个对象之间创建一个关联，这样，一个对象就可以通过委托访问另一个对象的属性和函数，所以与其叫继承，委托的说法反而更准确些。
 
-### 总结
+## 总结
 
 
 本文 参考自 [冴羽的博客](https://github.com/mqyqingfeng/Blog),通过 读＋自己理解写一遍。深刻理解其中原理。避免看过就忘
